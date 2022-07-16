@@ -6,61 +6,130 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function App() {
-  let [formData, setFormData] = useState([
+  const [formData, setFormData] = useState([
     {
-      address: "",
-      addressError: "Required",
-      panUpload: "",
-      panUploadError: "Required",
-      date: null,
-      dateError: "Required",
+      firstName: {
+        key: "firstName",
+        label: "First Name",
+        type: "text",
+        placeholder: "Enter your first Name",
+        value: "",
+        rules: {
+          required: true,
+        },
+      },
+      lastName: {
+        key: "lastName",
+        label: "Last Name",
+        type: "text",
+        placeholder: "Enter your Last Name",
+        value: "",
+        rules: {
+          required: true,
+        },
+      },
     },
   ]);
-  const [startDate, setStartDate] = useState();
 
-  const handleChange = (index, e) => {
+  // let [formData, setFormData] = useState([
+  //   {
+  //     address: "",
+  //     addressError: "Required",
+  //     panUpload: "",
+  //     panUploadError: "Required",
+  //     date: null,
+  //     dateError: "Required",
+  //   },
+  // ]);
+
+  const handleChange = (index, e, key) => {
     const { value } = e.target;
+    console.log(key);
     const data = [...formData];
-    data[index].address = value;
+    data[index][key].value = value;
     setFormData(data);
   };
 
-  const onChange = (e, index) => {
-    var files = e.target.files[0];
-    console.log(files);
-    var filesArr = Array.prototype.slice.call(files);
-    console.log(filesArr);
-    // this.setState({ files: [...this.state.files, ...filesArr] });
-    const data = [...formData];
-    data[index].panUpload = files;
-    setFormData(data);
-  };
+  // const onChange = (e, index) => {
+  //   var files = e.target.files[0];
+  //   console.log(files);
+  //   var filesArr = Array.prototype.slice.call(files);
+  //   console.log(filesArr);
+  //   // this.setState({ files: [...this.state.files, ...filesArr] });
+  //   const data = [...formData];
+  //   data[index].panUpload = files;
+  //   setFormData(data);
+  // };
 
-  const onSetDate = (date, index) => {
-    const data = [...formData];
-    data[index].date = date;
-    setFormData(data);
-  };
+  // const onSetDate = (date, index) => {
+  //   const data = [...formData];
+  //   data[index].date = date;
+  //   setFormData(data);
+  // };
 
   const handleaddclick = () => {
     setFormData([
       ...formData,
       {
-        address: "",
-        addressError: "Required",
-        panUpload: "",
-        panUploadError: "Required",
-        date: null,
-        dateError: "Required",
+        firstName: {
+          key: "firstName",
+          label: "First Name",
+          type: "text",
+          placeholder: "Enter your first Name",
+          value: "",
+          rules: {
+            required: true,
+          },
+        },
+        lastName: {
+          key: "lastName",
+          label: "Last Name",
+          type: "text",
+          placeholder: "Enter your Last Name",
+          value: "",
+          rules: {
+            required: true,
+          },
+        },
       },
     ]);
   };
 
+  const handleFormDataPost = () => {
+    let arr = [...formData];
+    let member = {}
+    for (let i = 0; i < arr.length; i++) {
+      arr[i].member = `member $[i]`
+    }
+    console.log(member)
+
+    console.log("data", formData);
+  };
+
   return (
     <div className="App">
+      <p>Forms</p>
+
       {formData.map((item, index) => (
+        <div key={index} style={{ display: "flex" }}>
+          <input
+            {...item.firstName}
+            // type="text"
+            // name="address"
+            onChange={(e) => handleChange(index, e, item.firstName.key)}
+          />
+          <input
+            {...item.lastName}
+            // type="text"
+            // name="address"
+            onChange={(e) => handleChange(index, e, item.lastName.key)}
+          />
+        </div>
+      ))}
+      <button onClick={handleFormDataPost}>Post</button>
+
+      {/* {formData.map((item, index) => (
         <>
-          {/* {JSON.stringify(item)} */}
           <input
             type="text"
             // name="address"
@@ -79,7 +148,7 @@ function App() {
           />
           <p style={{ color: "red" }}>{item.dateError}</p>
         </>
-      ))}
+      ))} */}
       <button className="btn btn-success" onClick={handleaddclick}>
         Add More
       </button>
