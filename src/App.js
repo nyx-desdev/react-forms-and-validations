@@ -4,6 +4,7 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import StepContainer from "./components/StepContainer";
 
 function App() {
   const [formData, setFormData] = useState([
@@ -108,7 +109,8 @@ function App() {
 
   return (
     <div className="App">
-      <p>Forms</p>
+      <StepContainer />
+      {/* <p>Forms</p>
 
       {formData.map((item, index) => (
         <div key={index} style={{ display: "flex" }}>
@@ -126,7 +128,7 @@ function App() {
           />
         </div>
       ))}
-      <button onClick={handleFormDataPost}>Post</button>
+      <button onClick={handleFormDataPost}>Post</button> */}
 
       {/* {formData.map((item, index) => (
         <>
@@ -149,9 +151,9 @@ function App() {
           <p style={{ color: "red" }}>{item.dateError}</p>
         </>
       ))} */}
-      <button className="btn btn-success" onClick={handleaddclick}>
+      {/* <button className="btn btn-success" onClick={handleaddclick}>
         Add More
-      </button>
+      </button> */}
     </div>
   );
 }
