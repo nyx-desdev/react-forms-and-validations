@@ -28,6 +28,24 @@ function App() {
           required: true,
         },
       },
+      dob: {
+        key: "dob",
+        label: "dob",
+        type: "date",
+        value: "",
+        rules: {
+          required: true,
+        },
+      },
+      panUpload: {
+        key: "panUpload",
+        // label: "Pan Upload",
+        type: "file",
+        value: "",
+        // rules: {
+        //   required: true,
+        // },
+      },
     },
   ]);
 
@@ -47,6 +65,18 @@ function App() {
     console.log(key);
     const data = [...formData];
     data[index][key].value = value;
+    setFormData(data);
+  };
+
+  const handleUploadChange = (index, e, key) => {
+    console.log(index, e, key)
+    // const { value } = e.target;
+    // console.log(key);
+    console.log(e.target.files[0])
+    const data = [...formData];
+    console.log('d',data[index][key].value)
+    data[index][key].value = e.target.files[0];
+    console.log('dd',data)
     setFormData(data);
   };
 
@@ -91,17 +121,48 @@ function App() {
             required: true,
           },
         },
+        dob: {
+          key: "dob",
+          label: "dob",
+          type: "date",
+          value: "",
+          rules: {
+            required: true,
+          },
+        },
+        panUpload: {
+          key: "panUpload",
+          // label: "Pan Upload",
+          type: "file",
+          value: "",
+          // rules: {
+          //   required: true,
+          // },
+        },
       },
     ]);
   };
 
   const handleFormDataPost = () => {
-    let arr = [...formData];
-    let member = {}
-    for (let i = 0; i < arr.length; i++) {
-      arr[i].member = `member $[i]`
+    // let arr = [...formData];
+    // let member = {}
+    // for (let i = 0; i < arr.length; i++) {
+    //   arr[i].member = `member $[i]`
+    // }
+    // console.log(member)
+    let arr = [];
+    for (let i = 0; i < formData.length; i++) {
+      console.log(formData[i]);
+
+      let obj = {};
+      for (const variable in formData[i]) {
+        // console.log(formData[i][variable].value)
+        obj[variable] = formData[i][variable].value;
+      }
+      arr.push(obj);
+      console.log("obj", obj);
     }
-    console.log(member)
+    console.log("arr", arr);
 
     console.log("data", formData);
   };
@@ -123,6 +184,20 @@ function App() {
             // type="text"
             // name="address"
             onChange={(e) => handleChange(index, e, item.lastName.key)}
+          />
+          <input
+            {...item.dob}
+            // type="text"
+            // name="address"
+            onChange={(e) => handleChange(index, e, item.dob.key)}
+          />
+          <input
+            // {...item.panUpload}
+            type="file"
+            // value=""
+            // type="text"
+            // name="address"
+            onChange={(e) => handleUploadChange(index, e, item.panUpload.key)}
           />
         </div>
       ))}
